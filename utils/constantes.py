@@ -24,7 +24,7 @@ ROYAL_BLUE = 0, 116, 183
 NAVY_BLUE = 0, 59, 115
 
 
-SCREEN_SIZE = (1280, 720)
+TAMANHO_DA_TELA = (1280, 720)
 #BASICFONT = pygame.font.Font('FiraCode-Retina.ttf',50)
 
 NRO_COLUNA = 3

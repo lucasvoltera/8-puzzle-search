@@ -64,7 +64,7 @@ class Puzzle:
         i=0
         for k in range(3):
             for j in range(3):
-                blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':BABY_BLUE,'block':m[k][j]})
+                blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':BABY_BLUE,'bloco':m[k][j]})
                 bloco_x += bloco_w + 1 
                 i += 1
             bloco_y += bloco_h + 1
@@ -84,7 +84,7 @@ class Puzzle:
             i = 0
             for k in range(3):
                 for j in range(3):
-                    blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':BABY_BLUE,'block':int(numeros[i])})
+                    blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':BABY_BLUE,'bloco':int(numeros[i])})
                     bloco_x += bloco_w + 1 #right
                     i += 1
                 bloco_y += bloco_h + 1 #down
@@ -172,8 +172,8 @@ class Puzzle:
                     nosFilhos[i].distanciaManhattan()
                     nosFilhos[i].setAnterior(no)
                     # Cumulating the cost function
-                    nosFilhos[i].custo = no.cost + no.CustoDistanciaManhattan(nosFilhos[i])
-                    nosFilhos[i].distancia += nosFilhos[i].cost
+                    nosFilhos[i].custo = no.custo + no.CustoDistanciaManhattan(nosFilhos[i])
+                    nosFilhos[i].distancia += nosFilhos[i].custo
                     fila._put(nosFilhos[i])
             n += 1
             auxCusto = 0

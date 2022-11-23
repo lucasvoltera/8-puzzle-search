@@ -4,115 +4,128 @@ from .constantes import *
 from .matriz import *
 from .puzzle import *
 
+
 #Setup
 pygame.init()
-BASICFONT = pygame.font.Font('utils\FiraCode-Retina.ttf',50)
 
+## instanciando a fonte
+FONTE = pygame.font.Font('utils\FiraCode-Retina.ttf',50)
 pygame.display.set_caption('8 Puzzle')
-window_surface = pygame.display.set_mode(SCREEN_SIZE)
-background = pygame.Surface(SCREEN_SIZE)
-background.fill(pygame.Color(BABY_BLUE))
-manager = pygame_gui.UIManager(SCREEN_SIZE, 'theme.json')
 
-# Rights: https://iconmonstr.com/puzzle-19-png/
-programIcon = pygame.image.load('utils\logo.png')
-pygame.display.set_icon(programIcon)
-pygame_gui.core.IWindowInterface.set_display_title(self=window_surface,new_title="8-Puzzle")
+## instanciando a janela
+janela = pygame.display.set_mode(TAMANHO_DA_TELA)
+
+## instanciando o background
+fundo_da_tela = pygame.Surface(TAMANHO_DA_TELA)
+fundo_da_tela.fill(pygame.Color(BABY_BLUE))
+
+## instanciando o "Gerente"
+manager = pygame_gui.UIManager(TAMANHO_DA_TELA, 'theme.json')
+
+## instanciando o icone
+# Creditos: https://iconmonstr.com/puzzle-19-png/
+icone = pygame.image.load('utils\logo.png')
+pygame.display.set_icon(icone)
+
+## instanciando a janela
+pygame_gui.core.IWindowInterface.set_display_title(self=janela, new_title="8-Puzzle")
+
+def exibirElementos():
+    #Elementos
+    ### Título do arquivo
+    pygame_gui.elements.ui_label.UILabel(manager=manager, text="8-Puzzle",
+                                         relative_rect=pygame.Rect((540, 10), (300, 70)),object_id="#title_box")
+
+exibirElementos()
 
 
-
-def display_elements():
-    #Elements
-    ### Title Label
-    pygame_gui.elements.ui_label.UILabel(manager=manager,
-                                        text="8-Puzzle Game",
-                                        relative_rect=pygame.Rect((540, 10), (300, 70)),
-                                        object_id="#title_box"
-                                        )
-    
+### botão de solucionar
+botao_solucionar = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1000, 640), (250, 45)),
+                                                text='Solucionar puzzle',
+                                                manager=manager,
+                                                object_id="#solve_btn")
 
 
-display_elements()
-### solve button
-solve_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1000, 640), (250, 45)),
-                                             text='Solve Puzzle',
-                                             manager=manager,
-                                             object_id="#solve_btn")
+### Opções de algoritmos
+algoritmos_layout_rect = pygame.Rect((970, 600), (280, 35))
+## nome dos algoritmos disponíveis
+opcoesAlgoritmos = ["A*","Best-First"]
+botaoAlgoritmos = pygame_gui.elements.UIDropDownMenu(options_list=opcoesAlgoritmos,
+                                                     starting_option=opcoesAlgoritmos[1],
+                                                     relative_rect=algoritmos_layout_rect,
+                                                     manager=manager)
 
-### algorithmOptions DropDown
-dropdown_layout_rect = pygame.Rect((970, 600), (280, 35))
-algorithmOptions = ["A* (Manhatan Distance)","Best-First (Manhatan Distance)"]
-algorithmDropDown = pygame_gui.elements.UIDropDownMenu(options_list=algorithmOptions,
-                                                       starting_option=algorithmOptions[1],
-                                                       relative_rect=dropdown_layout_rect,
-                                                       manager=manager)
-
-### Search label
-pygame_gui.elements.ui_label.UILabel(parent_element=algorithmDropDown,
+### Buscar
+pygame_gui.elements.ui_label.UILabel(parent_element=botaoAlgoritmos,
                                      manager=manager,
-                                     text="Heuristic Search:", # (pos-width,pos-height),(width,height)
+                                     text="Heurística:", # (pos-width, pos-height), (width,height)
                                      relative_rect=pygame.Rect((800, 600), (170, 30)))
 
-### Final state input
+### input de estado final
 report_rect = pygame.Rect((1000, 210), (250, 30))
-Final_state = pygame_gui.elements.UITextEntryLine(relative_rect=report_rect,
+EstadoFinal = pygame_gui.elements.UITextEntryLine(relative_rect=report_rect,
                                                   manager=manager)
 
-### Final state label
-pygame_gui.elements.ui_label.UILabel(parent_element=Final_state,
+## texto do estado final
+pygame_gui.elements.ui_label.UILabel(parent_element=EstadoFinal,
                                      manager=manager,
-                                     text="Final State:", # (pos-width,pos-height),(width,height)
+                                     text="Estado Final:", # (pos-width,pos-height),(width,height)
                                      relative_rect=pygame.Rect((855, 210), (140, 30)))
 
-### set final state with button
-set_final_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1000, 250), (250, 30)),
-                                                text='Set Final State',
-                                                manager=manager)
-### shuffle button
-button_layout_rect = pygame.Rect((1000, 290), (250, 30))
-shuffle_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                             text='Shuffle',
+### set estado final com o botão
+setBotaoFinal = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1000, 250), (250, 30)),
+                                             text='Set Estado Final',
                                              manager=manager)
 
-### info button
-info_html = "<b>Click Here<b>To see developers info!!!"
-button_layout_rect = pygame.Rect((1250, 690), (30, 30))
-info_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                             text='?',
-                                             manager=manager,
-                                             tool_tip_text=info_html)
-### alert label
-alert_label = pygame_gui.elements.ui_label.UILabel(
-                                     manager=manager,
-                                     text="",
-                                     relative_rect=pygame.Rect((920, 320), (250, 30)),
-                                     object_id="#accept_label")
+### Botão de emparalhar
+botao_layout_rect = pygame.Rect((1000, 290), (250, 30))
+botao_embaralhar = pygame_gui.elements.UIButton(relative_rect=botao_layout_rect,
+                                                text='Embaralhar',
+                                                manager=manager)
+
+### Botão de informações
+info_html = "<b>Clique aqui<b> para ver as informações dos desenvolvedores!!!"
+
+botao_layout_rect = pygame.Rect((1250, 690), (30, 30))
+botao_info = pygame_gui.elements.UIButton(relative_rect=botao_layout_rect,
+                                          text='?',
+                                          manager=manager,
+                                          tool_tip_text=info_html)
 
 
-def draw_blocks(blocks):
-    for block in blocks:
-        if block['block'] != 0:
-            pygame.draw.rect(window_surface, BLUE_GROTTO, block['rect'])
-            textSurf = BASICFONT.render(str(block['block']), True, NAVY_BLUE)
-            textRect = textSurf.get_rect()
-            textRect.center = block['rect'].left+50,block['rect'].top+50
-            window_surface.blit(textSurf, textRect)
+### texto de alerta
+texto_alerta = pygame_gui.elements.ui_label.UILabel(manager=manager,
+                                                    text="",
+                                                    relative_rect=pygame.Rect((920, 320), (250, 30)),
+                                                    object_id="#accept_label")
+
+
+def desenharBlocos(blocos):
+    for bloco in blocos:
+        if bloco['bloco'] != 0:
+            pygame.draw.rect(janela, BLUE_GROTTO, bloco['rect'])
+            textoSuperficie = FONTE.render(str(bloco['bloco']), True, NAVY_BLUE)
+            textoRect = textoSuperficie.get_rect()
+            textoRect.center = bloco['rect'].left + 50, bloco['rect'].top + 50
+            janela.blit(textoSuperficie, textoRect)
         else:
-            pygame.draw.rect(window_surface, ROYAL_BLUE, block['rect'])
+            pygame.draw.rect(janela, ROYAL_BLUE, bloco['rect'])
 
-def solveAnimation(moves):
-    for mv in moves:
-        zero = puzzle.matriz.searchBlock(0)
-        if mv == "right":
+
+def animacaoSolucionar(puzzle, movimentos):
+    for mv in movimentos:
+        zero = puzzle.matriz.procurarBloco(0)
+
+        if mv == "direita":
             puzzle.matriz.moverDireita(zero)
-        elif mv == "left":
+        elif mv == "esquerda":
             puzzle.matriz.moverEsquerda(zero)  
-        elif mv == "up":
+        elif mv == "cima":
             puzzle.matriz.moverCima(zero)
-        elif mv == "down":
+        elif mv == "baixo":
             puzzle.matriz.moverBaixo(zero)
-            
+    
         puzzle.setBlocosMatriz()
-        draw_blocks(puzzle.blocos)
+        desenharBlocos(puzzle.blocos)
         pygame.display.update()
         time.sleep(0.2)

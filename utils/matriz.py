@@ -60,7 +60,7 @@ class Matriz:
 
         if zero[0] > 0:
             self.moverCima(zero)
-            movimentos.append("up")
+            movimentos.append("cima")
             nosPossiveis.append(deepcopy(self))
             zero = self.procurarBloco(0)
             self.moverBaixo(zero)
@@ -68,7 +68,7 @@ class Matriz:
 
         if zero[0] < 2:
             self.moverBaixo(zero)
-            movimentos.append("down")
+            movimentos.append("baixo")
             nosPossiveis.append(deepcopy(self))
             zero = self.procurarBloco(0)
             self.moverCima(zero)
@@ -76,7 +76,7 @@ class Matriz:
 
         if zero[1] > 0:
             self.moverEsquerda(zero)
-            movimentos.append("left")
+            movimentos.append("esquerda")
             nosPossiveis.append(deepcopy(self))
             zero = self.procurarBloco(0)
             self.moverDireita(zero)
@@ -84,7 +84,7 @@ class Matriz:
 
         if zero[1] < 2:
             self.moverDireita(zero)
-            movimentos.append("right")
+            movimentos.append("direita")
             nosPossiveis.append(deepcopy(self))
             zero = self.procurarBloco(0)
             self.moverEsquerda(zero)
@@ -114,7 +114,7 @@ class Matriz:
         for i in range(3):
             for j in range(3):
                 if self.matriz[i][j] != 0:
-                    fi, fj = self.getXY(self.matriz[i][j], Final.matrix)
+                    fi, fj = self.getXY(self.matriz[i][j], Final.matriz)
                     res += abs(fi - i) + abs(fj - j)
         return res
 
