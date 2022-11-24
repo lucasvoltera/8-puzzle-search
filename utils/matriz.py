@@ -122,7 +122,6 @@ class Matriz:
             for y in range(3):
                 if valor == matrizFinal[x][y]:
                     return (x,y)
-
     
     def distanciaManhattan(self):
         res = 0

@@ -13,7 +13,7 @@ class Puzzle:
         self.y = y
         self.largura = largura
         self.altura = altura
-        self.tempoUltimoResolvido = tempoUltimoResolvido ## lastSolveTime
+        self.tempoUltimoResolvido = tempoUltimoResolvido
         self.movimento = movimento
         self.custo = custo
         self.matriz = matriz
@@ -44,6 +44,20 @@ class Puzzle:
                     ref.remove(int(i))
         ## retorna se é valido ou não
         return valido
+
+    def getMovimentosPossiveis(self, zero):
+        movimentosPossiveis = []
+        ## de acordo com a coordenada, verifica quais são os movimentos possíveis e armazena em uma lista 
+        if zero[0] > 0:
+            movimentosPossiveis.append(self.matriz.moverCima)
+        if zero[0] < 2:
+            movimentosPossiveis.append(self.matriz.moverBaixo)
+        if zero[1] > 0:
+            movimentosPossiveis.append(self.matriz.moverEsquerda)
+        if zero[1] < 2:
+            movimentosPossiveis.append(self.matriz.moverDireita)
+        return movimentosPossiveis
+
     
     def blocosAleatorios(self): 
         ## pega um valor inteiro aleatório entre 30 a 40
@@ -52,23 +66,13 @@ class Puzzle:
         for i in range(n):
             ## procura pelo bloco 0 e retorna a coordenada do bloco zero
             zero = self.matriz.procurarBloco(0)
-            movimentosPossiveis = []
-            ## de acordo com a coordenada, verifica quais são os movimentos possíveis e armazena em uma lista 
-            if zero[0] > 0:
-                movimentosPossiveis.append(self.matriz.moverCima)
-            if zero[0] < 2:
-                movimentosPossiveis.append(self.matriz.moverBaixo)
-            if zero[1] > 0:
-                movimentosPossiveis.append(self.matriz.moverEsquerda)
-            if zero[1] < 2:
-                movimentosPossiveis.append(self.matriz.moverDireita)
+            movimentosPossiveis = self.getMovimentosPossiveis(zero)
             ## manda para alguma posição aleatória dentra as possiveis
             random.choice(movimentosPossiveis)(zero)
         ## faz a matriz
         self.setBlocosMatriz()
 
     def setBlocosMatriz(self):
-        blocos = []
         ## pega algumas informações da matriz
         bloco_x = self.x
         bloco_y = self.y
@@ -76,26 +80,29 @@ class Puzzle:
         bloco_h = self.altura / 3
         ## retorna uma matriz de zeros
         m = self.matriz.getMatriz()
+        self.blocos = self.construirBlocos(bloco_x, bloco_y, bloco_w, bloco_h, matriz = m)
 
-        ## isso aqui da pra colocar em uma função separada
-
-        i=0
-        ## percorrendo a matriz
-        for k in range(3):
-            for j in range(3):
-                ## para cada bloco, armazena as medidas do retangulo, a cor e os indeces do bloco, armazenando tudo em uma lista
-                blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':BABY_BLUE,'bloco':m[k][j]})
-                bloco_x += bloco_w + 1 
+    def construirBlocos(self, bloco_x, bloco_y, bloco_w, bloco_h, numeros = None, matriz = None):
+        blocos = []
+        i = 0
+        for k in range(NRO_LINHA):
+            for j in range(NRO_COLUNA):
+                if numeros == None:
+                    ## para cada bloco, armazena as medidas do retangulo, a cor e os indeces do bloco, armazenando tudo em uma lista
+                    blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':KINDA_OF_BLACK ,'bloco':matriz[k][j]})
+                else:
+                    blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':KINDA_OF_BLACK ,'bloco':int(numeros[i])})
+                bloco_x += bloco_w + 1 #right
                 i += 1
-            bloco_y += bloco_h + 1
+            bloco_y += bloco_h + 1 #down
             bloco_x = self.x
-        ## a variavel da classe recebe a lista com todos os blocos armazenados
-        self.blocos = blocos
+        return blocos
+
+
 
     def setBlocos(self, string):
         ## separa os numeros por virgula
         numeros = string.split(",")
-        blocos = []
         ## verifica se os numeros são validos
         if self.numeroValido(numeros):
             ## pegando as informações do retangulo
@@ -105,18 +112,7 @@ class Puzzle:
             bloco_h = self.altura / 3
             ## constroi a matriz com os numeros validados pelo usuario
             self.matriz.construirMatriz(string)
-
-            ## isso aqui é repetido e da pra fazer uma função com isso - talvez pra cria informações dos blocos
-
-            i = 0
-            for k in range(NRO_LINHA):
-                for j in range(NRO_COLUNA):
-                    blocos.append({'rect':pygame.Rect(bloco_x, bloco_y, bloco_w, bloco_h),'color':BABY_BLUE,'bloco':int(numeros[i])})
-                    bloco_x += bloco_w + 1 #right
-                    i += 1
-                bloco_y += bloco_h + 1 #down
-                bloco_x = self.x
-            self.blocos = blocos
+            self.blocos = self.construirBlocos(bloco_x, bloco_y, bloco_w, bloco_h, numeros = numeros)
             return True
         return False
 

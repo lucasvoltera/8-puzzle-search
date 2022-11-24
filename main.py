@@ -36,7 +36,7 @@ while rodando:
                     if not puzzle.setBlocos(EstadoFinal.get_text()):
                         texto_alerta.set_text("Estado final inválido!")
                     else:
-                        texto_alerta.set_text("Estado final inválido!")
+                        texto_alerta.set_text("Estado final válido!")
                         puzzle.estadoFinal = EstadoFinal.get_text()
 
                 ## verifica o botão de informação
@@ -59,9 +59,9 @@ while rodando:
                         ## manda uma mnesagem de aviso
                         report_msg = '<b>Nós visitados:</b> '+ str(puzzle.custo)+'\n<b>Tempo:</b>'+ tempo + '\n<b>Resolução:</b> '+str(len(movimentos))+' Passos'
                         janela_confirmacao = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((600, 300), (180, 80)),
-                                                                                                manager = manager,
-                                                                                                action_long_desc = report_msg,
-                                                                                                window_title =algoritmo.split(" ")[0] + ' Report da busca',)
+                                                                                                            manager = manager,
+                                                                                                            action_long_desc = report_msg,
+                                                                                                            window_title =algoritmo.split(" ")[0] + ' Report da busca',)
                         ## faz a animacao
                         animacaoSolucionar(puzzle, movimentos)
                     

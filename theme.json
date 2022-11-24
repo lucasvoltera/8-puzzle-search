@@ -5,21 +5,21 @@
 
       "colours":
       {
-         "normal_bg": "#0074B7",
+         "normal_bg": "#012030",
          "hovered_bg": "#60A3D9",
-         "disabled_bg": "#0074B7",
-         "selected_bg": "#0074B7",
-         "active_bg": "#193784",
+         "disabled_bg": "#012030",
+         "selected_bg": "#012030",
+         "active_bg": " #45C4B0",
          "normal_text": "#FFFFFF",
-         "hovered_text": "#BFD7ED",
+         "hovered_text": "#012030",
          "selected_text": "#FFFFFF",
          "disabled_text": "#6d736f",
          "active_text": "#FFFFFF",
          "normal_border": "#FFFFFF",
-         "hovered_border": "#B0B0B0",
-         "disabled_border": "#808080",
-         "selected_border": "#003B73",
-         "active_border": "#003B73"
+         "hovered_border": "#13678A",
+         "disabled_border": "#13678A",
+         "selected_border": "#FFFFFF",
+         "active_border": "#FFFFFF"
       },
       "misc":
       {
@@ -28,7 +28,7 @@
       "font":
       {
           "name": "fira_code",
-          "size": "14",
+          "size": "16",
           "bold": "1",
           "italic": "0"
       }
@@ -38,14 +38,14 @@
    {
       "colours":
       {
-         "dark_bg":"#BFD7ED",
-         "normal_bg":"#BFD7ED",
-         "normal_text": "#003B73"
+         "dark_bg":"#012030",
+         "normal_bg":"#012030",
+         "normal_text": "#FFFFFF"
       },
       "font":
       {
          "name": "fira_code",
-         "size": "17",
+         "size": "20",
          "bold": "0",
          "italic": "1"
       }
@@ -56,8 +56,8 @@
 
       "colours":
       {
-         "normal_bg": "#BFD7ED",
-         "selected_bg": "#0074B7",
+         "normal_bg": "#012030",
+         "selected_bg": "#012030",
          "normal_text": "#55595e",
          "selected_text": "#FFFFFF",
          "normal_border": "#FFFFFF"
@@ -73,9 +73,9 @@
    {
       "colours":
       {
-         "normal_bg": "#BFD7ED",
-         "selected_bg": "#0074B7",
-         "normal_text": "#003B73",
+         "normal_bg": "#012030",
+         "selected_bg": "#012030",
+         "normal_text": "#FFFFFF",
          "selected_text": "#FFFFFF",
          "normal_border": "#FFFFFF"
       },
@@ -88,25 +88,25 @@
    {
       "colours":
       {
-         "normal_bg": "#BFD7ED",
-         "dark_bg": "#BFD7ED",
-         "selected_bg": "#0074B7"
+         "normal_bg": "#012030",
+         "dark_bg": "#012030",
+         "selected_bg": "#012030"
       }
    },
    "text_entry_line":
    {
       "colours":
       {
-         "dark_bg": "#BFD7ED",
-         "selected_bg": "#0074B7",
-         "normal_text": "#003B73",
+         "dark_bg": "#012030",
+         "selected_bg": "#012030",
+         "normal_text": "#FFFFFF",
          "selected_text": "#FFFFFF",
          "normal_border": "#FFFFFF"
       },
       "font":
       {
          "name": "fira_code",
-         "size": "14",
+         "size": "16",
          "bold": "0",
          "italic": "0"
       },
@@ -156,14 +156,14 @@
       "font":
       {
          "name": "fira_code",
-         "size": "13",
+         "size": "15",
          "bold": "1",
          "italic": "0"
       },
       "colours":
       {
-         "dark_bg": "#BFD7ED",
-         "selected_bg": "#BFD7ED",
+         "dark_bg": "#012030",
+         "selected_bg": "#012030",
          "normal_text": "#8C0BE5",
          "selected_text": "#FFFFFF",
          "normal_border": "#FFFFFF"
