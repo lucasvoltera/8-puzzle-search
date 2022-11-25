@@ -36,7 +36,7 @@ while rodando:
                     if not puzzle.setBlocos(EstadoFinal.get_text()):
                         texto_alerta.set_text("Estado final inválido!")
                     else:
-                        texto_alerta.set_text("Estado final válido!")
+                        texto_alerta.set_text("Estado final inválido!")
                         puzzle.estadoFinal = EstadoFinal.get_text()
 
                 ## verifica o botão de informação
@@ -44,9 +44,9 @@ while rodando:
                     Info_msg = '<b>8-Puzzle<br><br>Autores:</b><br>Lucas Vinícius Voltera<br>Carlos Eduardo Santana'
                     # Information Box - Info
                     info_win = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((600, 300), (180, 80)),
-                                                                                            manager = manager,
-                                                                                            action_long_desc = Info_msg,
-                                                                                            window_title ='Informações dos desenvolvedores',)
+                                                                                                manager = manager,
+                                                                                                action_long_desc = Info_msg,
+                                                                                                window_title ='Informações dos desenvolvedores',)
 
                 ## verifica se é o botao de solucionar                                                                            
                 elif evento.ui_element == botao_solucionar:

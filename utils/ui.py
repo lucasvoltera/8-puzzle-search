@@ -30,19 +30,19 @@ def exibirElementos():
     #Elementos
     ### Título do arquivo
     pygame_gui.elements.ui_label.UILabel(manager=manager, text="8-Puzzle",
-                                         relative_rect=pygame.Rect((540, 10), (300, 70)),object_id="#title_box")
+                                         relative_rect=pygame.Rect((425, 40), (400, 40)),object_id="#title_box")
 
 
 exibirElementos()
 ### botão de solucionar
-botao_solucionar = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1000, 640), (250, 45)),
+botao_solucionar = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 640), (250, 45)),
                                                 text='Solucionar puzzle',
                                                 manager=manager,
                                                 object_id="#solve_btn")
 
 
 ### Opções de algoritmos
-algoritmos_layout_rect = pygame.Rect((970, 600), (280, 35))
+algoritmos_layout_rect = pygame.Rect((970, 400), (280, 35))
 ## nome dos algoritmos disponíveis
 opcoesAlgoritmos = ["A*", "Best-First"]
 botaoAlgoritmos = pygame_gui.elements.UIDropDownMenu(options_list=opcoesAlgoritmos,
@@ -54,7 +54,7 @@ botaoAlgoritmos = pygame_gui.elements.UIDropDownMenu(options_list=opcoesAlgoritm
 pygame_gui.elements.ui_label.UILabel(parent_element=botaoAlgoritmos,
                                      manager=manager,
                                      text="Heurística:", # (pos-width, pos-height), (width,height)
-                                     relative_rect=pygame.Rect((800, 600), (170, 30)))
+                                     relative_rect=pygame.Rect((800, 400), (170, 30)))
 
 
 report_rect = pygame.Rect((1000, 210), (250, 30))
@@ -72,12 +72,12 @@ pygame_gui.elements.ui_label.UILabel(parent_element=EstadoFinal,
 
 ### set estado final com o botão
 setBotaoFinal = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((1000, 250), (250, 30)),
-                                             text='Set Estado Final',
+                                             text='Definir Estado Final',
                                              manager=manager)
 
 
 ### Botão de emparalhar
-botao_layout_rect = pygame.Rect((1000, 290), (250, 30))
+botao_layout_rect = pygame.Rect((1000, 350), (250, 30))
 botao_embaralhar = pygame_gui.elements.UIButton(relative_rect=botao_layout_rect,
                                                 text='Embaralhar',
                                                 manager=manager)
