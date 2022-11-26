@@ -11,7 +11,7 @@ pygame.display.update()
 clock = pygame.time.Clock()
 puzzle = Puzzle.new(250, 220, 330, 330)
 puzzle.inicializar()
-algoritmo = "Best-First"
+algoritmo = "Heuristica Pessoal"
 estFinal= "1,2,3,4,5,6,7,8,0"
 rodando = True
 
@@ -51,9 +51,9 @@ while rodando:
                 ## verifica se é o botao de solucionar                                                                            
                 elif evento.ui_element == botao_solucionar:
                     ## se for o algoritmo best-first, executa ele
-                    if algoritmo == "Best-First":
+                    if algoritmo == "Heuristica 1":
                         ## pega o nro de movimento
-                        movimentos = puzzle.bestFirst()
+                        movimentos = puzzle.heuristica1()
                         ## pega o tempo
                         tempo = "{temp: .5f} segundos".format(temp = puzzle.tempoUltimoResolvido)
                         ## manda uma mnesagem de aviso
@@ -65,10 +65,10 @@ while rodando:
                         ## faz a animacao
                         animacaoSolucionar(puzzle, movimentos)
                     
-                    ## se for o algoritmo a_star
-                    elif algoritmo == "A*":
+                    ## se for o algoritmo da heuristica 2
+                    elif algoritmo == "Heuristica 2":
                         ## pega o nro de movimentos
-                        movimentos = puzzle.a_star()
+                        movimentos = puzzle.heuristica2()
                         ## pega o tempo
                         tempo = "{temp: .5f} seconds".format(temp = puzzle.tempoUltimoResolvido)
                         ## manda uma mensagem de aviso
@@ -77,6 +77,21 @@ while rodando:
                                                                                                             manager = manager,
                                                                                                             action_long_desc = report_msg,
                                                                                                             window_title =algoritmo.split(" ")[0] + ' Report da busca',)
+
+                        animacaoSolucionar(puzzle, movimentos)
+
+                    elif algoritmo == "Heuristica Pessoal":
+                        ## pega o nro de movimentos
+                        movimentos = puzzle.heristicaPessoal()
+                        ## pega o tempo
+                        tempo = "{temp: .5f} seconds".format(temp = puzzle.tempoUltimoResolvido)
+                        ## manda uma mensagem de aviso
+                        report_msg = '<b>Nós visitados:</b> '+str(puzzle.custo)+'\n<b>Tempo:</b>'+ tempo + '\n<b>Resolução:</b>'+str(len(movimentos))+' Passos'
+                        janela_confirmacao = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((600, 300), (180, 80)),
+                                                                                                            manager = manager,
+                                                                                                            action_long_desc = report_msg,
+                                                                                                            window_title =algoritmo.split(" ")[0] + ' Report da busca',)
+
                         ## faz a animacao
                         animacaoSolucionar(puzzle, movimentos)
             

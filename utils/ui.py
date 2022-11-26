@@ -44,7 +44,7 @@ botao_solucionar = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 
 ### Opções de algoritmos
 algoritmos_layout_rect = pygame.Rect((970, 400), (280, 35))
 ## nome dos algoritmos disponíveis
-opcoesAlgoritmos = ["A*", "Best-First"]
+opcoesAlgoritmos = ["Heuristica 1", "Heuristica 2", "Heuristica Pessoal"]
 botaoAlgoritmos = pygame_gui.elements.UIDropDownMenu(options_list=opcoesAlgoritmos,
                                                      starting_option=opcoesAlgoritmos[0],
                                                      relative_rect=algoritmos_layout_rect,
@@ -116,15 +116,15 @@ def desenharBlocos(blocos):
 
 
 def animacaoSolucionar(puzzle, movimentos):
-    for mv in movimentos:
+    for movimento in movimentos:
         zero = puzzle.matriz.procurarBloco(0)
-        if mv == "direita":
+        if movimento == "direita":
             puzzle.matriz.moverDireita(zero)
-        elif mv == "esquerda":
+        elif movimento == "esquerda":
             puzzle.matriz.moverEsquerda(zero)  
-        elif mv == "cima":
+        elif movimento == "cima":
            puzzle.matriz.moverCima(zero)
-        elif mv == "baixo":
+        elif movimento == "baixo":
             puzzle.matriz.moverBaixo(zero)
     
         puzzle.setBlocosMatriz()

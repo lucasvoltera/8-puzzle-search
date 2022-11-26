@@ -133,12 +133,12 @@ class Puzzle:
         while(atual > 0):
             return 1
 
-    ## precisa na real do Breadth first search
-    def bestFirst(self):
+    ## best-search
+    def heristicaPessoal(self):
         #inicio do tempo
         inicio = time.time()
 
-        ## no recebe a matriz
+        ## no recebe a matriz (tabuleiro)
         no = self.matriz
         ## cria uma matriz final 3x3
         Mfinal = Matriz(3,3)
@@ -167,7 +167,7 @@ class Puzzle:
             ## para cada no filho
             for i in range(len(nosFilhos)):
                 ## se o nó não está entre os visitados e calcula a distancia, e seta os nós anteriores
-                if not self.existeEm(nosFilhos[i].getMatriz(),nosVisitados):
+                if not self.existeEm(nosFilhos[i].getMatriz(), nosVisitados):
                     nosFilhos[i].movimento = movimentos[i]
                     nosFilhos[i].distanciaManhattan()
                     nosFilhos[i].setAnterior(no)
@@ -195,12 +195,76 @@ class Puzzle:
         ## calcula o tempo total
         self.tempoUltimoResolvido = fim-inicio
 
-        print("## Best-First ##\n")
-        print("Tempo gasto {temp: .5f}:".format(temp = fim-inicio))
-        print("Nós visitados:",n,"\n")
+        #print("## Best-First ##\n")
+        #print("Tempo gasto {temp: .5f}:".format(temp = fim-inicio))
+        #print("Nós visitados:",n,"\n")
         return movimentos[::-1]
     
-    def a_star(self):
+    ## greedy search
+    def heuristica1(self):
+        #inicio do tempo
+        inicio = time.time()
+
+        ## no recebe a matriz (tabuleiro)
+        no = self.matriz
+        ## cria uma matriz final 3x3
+        Mfinal = Matriz(3,3)
+        ## constroi a matriz final de acordo com a variavel estado inicial
+        Mfinal.construirMatriz(self.estadoFinal) #1,2,3,4,5,6,7,8,0
+        ## copia a matriz final
+        final = Mfinal.getMatriz()
+        ## cria uma fila de prioridade
+        fila = Queue()
+        ## adiciona a matriz na fila
+        fila.put(no)
+        ## cria uma lista de nos visitados
+        nosVisitados = []
+        n = 1
+        
+        ## enquanto o nó não é igual e a fila nnao etiver vazia
+        while(not no.eIgual(final) and not fila.empty()):
+            ## retira o elemento primeiro elemento da fila
+            no = fila.get()
+            ## adiciona o no visitado
+            nosVisitados.append(no)
+            ## cria uma lista de movimentos
+            movimentos = []
+            ## pega os nos possiveis a serem visitados
+            nosFilhos = no.getNosPossiveis(movimentos)
+            ## para cada no filho
+            for i in range(len(nosFilhos)):
+                ## se o nó não está entre os visitados e calcula a distancia, e seta os nós anteriores
+                if not self.existeEm(nosFilhos[i].getMatriz(), nosVisitados):
+                    nosFilhos[i].movimento = movimentos[i]
+                    nosFilhos[i].distanciaManhattan()
+                    nosFilhos[i].setAnterior(no)
+                    fila._put(nosFilhos[i])
+            n += 1
+        ## cria a lista de movimentos
+        movimentos = []
+        self.custo = n
+        ## se o nó for igual ao final
+        if(no.eIgual(final)):
+            ## armazena os movimentos
+            movimentos.append(no.movimento)
+            ## registra o anterior
+            nd = no.anterior
+            ## se o nó anterior for diferente de vazio
+            while nd != None:
+                ## e o movimento for diferente de vazio
+                if nd.movimento != '':
+                    ## faz armazena o anterior
+                    movimentos.append(nd.movimento)
+                ## atualiza quem é o anterior
+                nd = nd.anterior
+        ## para de contar o tempo do algoritmo
+        fim = time.time()
+        ## calcula o tempo total
+        self.tempoUltimoResolvido = fim-inicio
+        return movimentos[::-1]
+
+    ## adaptacao a* - nivel 2
+    def heuristica2(self):
         # iniciando timer
         inicio = time.time()
 
@@ -266,9 +330,5 @@ class Puzzle:
         ## termina de contar
         fim = time.time()
         ## calcula o tempo
-        self.tempoUltimoResolvido = fim-inicio
-        print("## A* ##\n")
-        print("Tempo gasto {temp: .5f}:".format(temp = fim-inicio))
-        print("Nós visitados:",n,"\n")
-        
+        self.tempoUltimoResolvido = fim-inicio        
         return movimentos[::-1]
